@@ -1,0 +1,28 @@
+:root {
+  --bg: #f9fafb; --surface: #ffffff; --ink: #101828; --body: #344054; --muted: #667085; --line: #eaecf0; --accent: #3538cd;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0f1320; --surface: #171c2c; --ink: #eef1f8; --body: #c9cfdd; --muted: #a2abc0; --line: #2a3145; --accent: #9aa4ff; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--body);
+  font-family: "IBM Plex Sans Thai", "Leelawadee UI", Tahoma, system-ui, sans-serif; font-size: 16px; line-height: 1.65;
+}
+main { max-width: 720px; margin: 0 auto; padding: 40px 20px 64px; }
+header { display: flex; gap: 16px; align-items: center; margin-bottom: 20px; }
+header img { border-radius: 14px; flex: 0 0 auto; }
+.eyebrow { margin: 0; color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+h1 { margin: 2px 0; color: var(--ink); font-size: clamp(24px, 5vw, 30px); line-height: 1.25; letter-spacing: -.01em; }
+h1 span { display: block; font-size: .7em; font-weight: 500; color: var(--muted); }
+.meta { margin: 0; color: var(--muted); font-size: 14px; }
+.lang { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; }
+.lang a { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); font-size: 14px; text-decoration: none; }
+section { padding: 24px; margin-bottom: 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+h2 { margin: 0 0 12px; color: var(--ink); font-size: 20px; }
+h3 { margin: 24px 0 6px; color: var(--ink); font-size: 16px; }
+p, li { max-width: 65ch; }
+ul, ol { padding-left: 1.3em; }
+li { margin: 4px 0; }
+a { color: var(--accent); }
