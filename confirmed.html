@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PInventory Email Confirmed</title>
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+<style>
+  .card { text-align: center; padding: 32px 24px; }
+  .badge { width: 72px; height: 72px; margin: 0 auto 16px; border-radius: 50%; display: grid; place-items: center; font-size: 36px; font-weight: 700; }
+  .ok { background: #dcfae6; color: #067647; box-shadow: 0 0 0 10px #ecfdf3; }
+  .bad { background: #fee4e2; color: #b42318; box-shadow: 0 0 0 10px #fef3f2; }
+  .card h2 { font-size: 24px; margin: 8px 0 4px; }
+  .card h2 span { display: block; font-size: 16px; font-weight: 500; color: var(--muted); }
+  .card p { margin: 10px auto 0; }
+  .open { display: inline-block; margin-top: 22px; padding: 13px 22px; border-radius: 10px; background: #3538cd; color: #fff; font-weight: 600; text-decoration: none; }
+  .open:hover { background: #2d31a6; }
+  .hint { font-size: 14px; color: var(--muted); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="icon.png" alt="" width="56" height="56">
+    <div>
+      <p class="eyebrow">PInventory</p>
+      <h1>บัญชี <span lang="en">Account</span></h1>
+    </div>
+  </header>
+
+  <section class="card" id="success">
+    <div class="badge ok" aria-hidden="true">✓</div>
+    <h2>ยืนยัน Email สำเร็จ <span lang="en">Your email is confirmed</span></h2>
+    <p>บัญชี PInventory ของคุณพร้อมใช้งานแล้ว เปิดแอปเพื่อเริ่มบันทึกสิ่งของได้เลย</p>
+    <p lang="en" class="hint">Your PInventory account is ready. Open the app to start saving your things.</p>
+    <a class="open" id="open" href="pinventory://auth/callback">เปิดแอป PInventory · Open the app</a>
+    <p class="hint">หากปุ่มไม่ทำงาน ให้เปิดแอปเองแล้วเข้าสู่ระบบด้วย Username หรือ Email<br><span lang="en">If the button doesn't work, open the app and sign in with your username or email.</span></p>
+  </section>
+
+  <section class="card" id="failed" hidden>
+    <div class="badge bad" aria-hidden="true">!</div>
+    <h2>ลิงก์ใช้ไม่ได้ <span lang="en">This link doesn't work</span></h2>
+    <p id="reason">ลิงก์อาจหมดอายุหรือถูกใช้ไปแล้ว</p>
+    <p class="hint">ลองเข้าสู่ระบบในแอป หากยังไม่ได้ยืนยัน ให้กด “ส่ง Email ยืนยันอีกครั้ง” ในหน้าสมัครสมาชิก<br><span lang="en">Try signing in. If your email still isn't confirmed, tap “Resend verification email” in the app.</span></p>
+  </section>
+
+  <nav class="lang"><a href="privacy.html">Privacy Policy / นโยบายความเป็นส่วนตัว</a><a href="delete-account.html">Delete account / ลบบัญชี</a></nav>
+</main>
+<script>
+  // Supabase sends the result in the address: tokens after "#" on success, error_description on failure.
+  const params = new URLSearchParams(location.hash.slice(1) + '&' + location.search.slice(1));
+  const error = params.get('error_description');
+  if (error) {
+    document.getElementById('success').hidden = true;
+    document.getElementById('failed').hidden = false;
+    document.getElementById('reason').textContent = error.replace(/\+/g, ' ');
+  } else if (params.get('access_token')) {
+    // Pass the sign-in on to the app, so the button opens it already signed in.
+    document.getElementById('open').href = 'pinventory://auth/callback' + location.hash;
+  }
+  // Don't leave the sign-in details visible in the address bar.
+  if (location.hash) history.replaceState(null, '', location.pathname);
+</script>
+</body>
+</html>
